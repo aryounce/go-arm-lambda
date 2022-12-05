@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Golang executables that use the `aws-lambda-go` module are their own runtimes
+# and do not need a custom runtime handler.
+#
+# This runtime bootstrap only exists to, when using the `provided.al2` runtime,
+# enable the "handler" configuration value for a Lambda function to be whatever
+# the user chooses (instead of `bootstrap`).
+#
+
+exec "${LAMBDA_TASK_ROOT}/${_HANDLER}"
