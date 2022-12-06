@@ -1,4 +1,6 @@
-.PHONY: default clean build-setup build-layer-content publish-layer-content
+.PHONY: \
+	default clean build-setup build-layer-content publish-layer-content \
+	lint test
 
 CONTENT_S3_BUCKET ?= ary.pub-lambda-community
 CONTENT_S3_KEY ?= go-arm-lambda/runtime-layer.zip
@@ -6,8 +8,18 @@ CONTENT_S3_KEY ?= go-arm-lambda/runtime-layer.zip
 default:
 	@echo "There is no default target for this Makefile" && exit 1
 
+lint:
+	shellcheck --norc src/*
+
 clean:
 	rm -rf build
+
+test-setup:
+	git submodule add https://github.com/bats-core/bats-support.git test/test_helper/bats-support
+	git submodule add https://github.com/bats-core/bats-assert.git test/test_helper/bats-assert
+
+test:
+	bats --show-output-of-passing-tests --print-output-on-failure test/*.bats
 
 build-setup: clean
 	@mkdir -p build
