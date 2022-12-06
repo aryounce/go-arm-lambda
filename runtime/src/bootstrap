@@ -8,4 +8,42 @@
 # the user chooses (instead of `bootstrap`).
 #
 
-exec "${LAMBDA_TASK_ROOT}/${_HANDLER}"
+set -eu -o pipefail
+
+exec_path="${LAMBDA_TASK_ROOT}/${_HANDLER}"
+
+#
+# Only basic existence and executable bit checks are done to ensure that the
+# function handler can be called. Handlers compiled for the wrong archtecture
+# are the user's problem.
+#
+
+if [ ! -e "${exec_path}" ];
+then
+	echo "Handler file not found at path: ${exec_path}" >> /dev/stderr
+	curl --silent -X POST "http://${AWS_LAMBDA_RUNTIME_API}/2018-06-01/runtime/init/error" \
+		--header "Lambda-Runtime-Function-Error-Type: Runtime.NoSuchHandler" \
+		--data - <<-JSON
+			{
+				"errorMessage": "Handler file not found at path: ${exec_path}",
+				"errorType": "InvalidFunctionException"
+			}
+JSON
+	exit 10
+fi
+
+if [ ! -x "${exec_path}" ];
+then
+	echo "Handler file not executable: ${exec_path}" >> /dev/stderr
+	curl --silent -X POST "http://${AWS_LAMBDA_RUNTIME_API}/2018-06-01/runtime/init/error" \
+		--header "Lambda-Runtime-Function-Error-Type: Runtime.NoSuchHandler" \
+		--data - <<-JSON
+			{
+				"errorMessage": "Handler file not executable: ${exec_path}",
+				"errorType": "InvalidFunctionException"
+			}
+JSON
+	exit 10
+fi
+
+exec "${exec_path}"
