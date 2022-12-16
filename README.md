@@ -2,7 +2,7 @@
 
 <img src="docs/go-arm-lambda.jpg"
      alt="Gopher Working Out"
-     style="float: left; vertical-align:center;" />More easily run Golang ARM (`arm64`) binaries as Lambda functions.
+     style="float: left;vertical-align:middle;" />More easily run Golang ARM (`arm64`) binaries as Lambda functions.
 
 ## Why?
 
