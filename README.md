@@ -17,7 +17,7 @@ This project is an overwrought shell one-liner that solves the very specific pro
 
 A [`bootstrap`](runtime/src/bootstrap) script is provided as a Lambda layer to make use of the Lambda's specified handler. When included in deployed Lambda functions this layer provides the "runtime" for the Go binary and does some basic error checking before executing the script. This ensures:
 
-- You can specify a "handler" like you would for X86 (Intel) Golang binaries.
+- You can specify a "handler" like you would for `x86_64` (Intel) Golang binaries.
 - Clear error logs are emitted when the handler is an invalid path.
 
 That's basically it.
