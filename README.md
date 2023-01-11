@@ -1,10 +1,6 @@
+<img src="docs/banner.png"
+     alt="Gophers">More easily run Golang ARM (`arm64`) binaries as Lambda functions.
 # go-arm-lambda
-
-<img src="docs/go-arm-lambda.jpg"
-     alt="Gopher Working Out"
-     style="float:left;vertical-align:middle;margin-right:20px;" />More easily run Golang ARM (`arm64`) binaries as Lambda functions.
-
-## Why?
 
 This project is an overwrought shell one-liner that solves the very specific problem of normalizing the specification, in CloudFormation or otherwise, of Golang AWS Lambda functions that use the `arm64` (Graviton2) architecture.
 
