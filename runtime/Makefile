@@ -31,6 +31,8 @@ publish-layer-content: build-layer-content
 	aws s3 cp \
 		build/$$(basename ${CONTENT_S3_KEY}) \
 		s3://${CONTENT_S3_BUCKET}/${CONTENT_S3_KEY}
+
+update-layer-content: publish-layer-content
 	aws lambda publish-layer-version \
 		--layer-name golang-arm-runtime \
 		--content S3Bucket=${CONTENT_S3_BUCKET},S3Key=${CONTENT_S3_KEY}

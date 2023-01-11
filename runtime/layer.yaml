@@ -2,6 +2,7 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: "Self-hosted Lambda runtime layer for Golang ARM executables."
 
+
 Parameters:
 
   ContentS3Bucket:
@@ -15,6 +16,7 @@ Parameters:
     Description: >-
       Lambda layer content key path.
     Default: "go-arm-lambda/runtime-layer.zip"
+
 
 Resources:
 
@@ -36,8 +38,8 @@ Resources:
     Properties:
       Action: "lambda:GetLayerVersion"
       LayerVersionArn: !Ref RuntimeLayer
-      # TODO: Use conditionals to support the permutations of "org" & "account"
       Principal: !Ref "AWS::AccountId"
+
 
 Outputs:
 
