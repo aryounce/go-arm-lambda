@@ -1,0 +1,57 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >-
+  Demonstration of how to use the go-arm-lambda layer with a
+  Lambda function.
+
+
+Parameters:
+
+  CodeS3Bucket:
+    Type: String
+    Description: >-
+      S3 bucket where example binary ZIP lives.
+    Default: "ary.pub-lambda-community"
+
+  CodeS3Key:
+    Type: String
+    Description: >-
+      Example lambda binary key path.
+    Default: "go-arm-lambda/example-function.zip"
+
+
+Resources:
+
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Architectures:
+        - arm64
+      Code:
+        S3Bucket: !Ref CodeS3Bucket
+        S3Key: !Ref CodeS3Key
+      Description: >-
+        Example function for the go-arm-lambda project.
+      Handler: example-func
+      Layers:
+        - !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:layer:golang-arm-runtime:4"
+      MemorySize: 128
+      PackageType: Zip
+      Role: !GetAtt ExecutionRole.Arn
+      Runtime: provided.al2
+      Timeout: 15
+
+  ExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          Effect: Allow
+          Principal:
+            Service: "lambda.amazonaws.com"
+          Action: "sts:AssumeRole"
+      Description: >-
+        Role for example go-arm-lambda function.
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"

@@ -1,0 +1,3 @@
+#!/bin/sh
+# This exists as a "mock" for `curl`.
+exit 0
