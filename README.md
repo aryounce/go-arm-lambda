@@ -47,6 +47,28 @@ Once installed the Lambda layer ARN is availalble as the `<stack-name>:runtime-l
 
 ## Usage
 
+Using the Lambda layer enables the architecture to be specified as `arm64` and the handler to be the name of your Go binary. The runtime **must** be set to `provided.al2`. This can be done via the command line, AWS Console, CloudFormation, or any other tool of your choice.
+
+When specifying these values in a CloudFormation template it looks something like:
+
+```  yaml
+Type: AWS::Lambda::Function
+Properties:
+  Architectures:
+    - arm64
+  Code:
+    S3Bucket: !Ref CodeS3Bucket
+    S3Key: !Ref CodeS3Key
+  Handler: example-func
+  Layers:
+    - !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:layer:golang-arm-runtime:1"
+  MemorySize: 128
+  PackageType: Zip
+  Role: ...
+  Runtime: provided.al2
+  Timeout: 15
+```
+
 See the [`example-function` folder](example-function/) for a simple Golang function and CloudFormation template.
 
 ## Related Reading
