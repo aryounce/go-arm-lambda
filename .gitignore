@@ -1,1 +1,23 @@
+#
+# Some entries pulled from Github's .gitignore example files.
+# See:
+#  - https://github.com/github/gitignore/blob/main/Go.gitignore
+#  - https://github.com/github/gitignore/blob/main/Global/macOS.gitignore
+#
+
 */build
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+.DS_Store
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Go workspace file
+go.work
