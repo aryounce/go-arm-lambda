@@ -3,6 +3,9 @@
 
 # go-arm-lambda
 
+> [!IMPORTANT]
+> As of July 2023 [Amazon Web Services has deprecated the `go1.x` runtime](https://aws.amazon.com/blogs/compute/migrating-aws-lambda-functions-from-the-go1-x-runtime-to-the-custom-runtime-on-amazon-linux-2/) and recommends users to switch to the `provided.al2` runtime. This project is less relevant as a result, but can still aid in error reporting.
+
 This project is an overwrought shell one-liner that solves the very specific problem of normalizing the specification, in CloudFormation or otherwise, of Golang AWS Lambda functions that use the `arm64` (Graviton2) architecture.
 
 1. Lambda [does not directly support](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html) (as of December 2022) the combination of the `go1.x` runtime and the `arm64` architecture.
